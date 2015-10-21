@@ -16,6 +16,7 @@ $(function($) {
 	});
 
 	var win = gui.Window.get();
+	win.show();
 	var isShowWindow = true;
 
 	var menu = new gui.Menu();
