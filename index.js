@@ -83,8 +83,9 @@ $(function($) {
 	})
 
 	$('#stopBtn').click(function() {
+		var self = this;
 		server.close(function() {
-			$(this).attr('disabled', "true");
+			$(self).attr('disabled', "true");
 			$('#startBtn').removeAttr("disabled");
 			$('#gotoUrl').removeAttr("href");
 			$('#gotoUrl').text('');
