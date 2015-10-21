@@ -1,0 +1,13 @@
+{
+  "name": "static-server",
+  "description": "Static web Server.",
+  "version": "0.0.2",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "frame": true,
+    "width": 600,
+    "height": 600,
+    "icon": "./icons/logo_16.png"
+  }
+}

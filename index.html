@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>静态文件服务器</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./index.css">
+	<link rel="shortcut icon" type="image/png" href="./icons/logo_16.png"/>
+</head>
+<body>
+	<header></header>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">选择目录</h3>
+			  </div>
+			  <div class="panel-body">
+			  	<div class="row"></div>
+				  	<input id="fileInput" type="file" nwdirectory style="display:none"/>
+				  	<button id="inputBtn" type="button" class="btn btn-default btn-lg">
+					  <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+					</button>
+					<span id="fileUrl">点击左侧按钮选择目录</span>
+				</div>
+<!-- 				<div class="row">
+					<div class="col-xs-10 col-xs-offset-1" id="serverUrl">
+						文件服务器地址:&nbsp&nbsp&nbsp&nbsp
+						<a href="http://127.0.0.1:8080" style="text-decoration: underline;">http://127.0.0.1:8080</a>
+					</div>
+				</div> -->
+			  </div>
+		</div>
+		<div class="row">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">服务配置(需重启应用)</h3>
+			  </div>
+			  <div class="panel-body">
+				<div class="has-success">
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox" id="svcBack" value="option1" checked disabled>
+				      后台启动
+				    </label>
+				  </div>
+				</div>
+				<div class="has-warning">
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox" id="svcAccess" value="option1" checked disabled>
+				      局域网访问
+				    </label>
+				  </div>
+				</div>
+				<div class="has-error">
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox" id="autoIndex" value="option1" checked disabled>
+				      自动显示"index.html"
+				    </label>
+				  </div>
+				</div>
+				<div class="form-group has-error col-xs-4">
+				  <label class="control-label" for="inputError1">服务端口</label>
+				  <input type="text" class="form-control" id="svcPort" value="8080">
+				</div>
+			  </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	<div class="row">
+			  		<div class="col-xs-4"><h3 class="panel-title">服务启停</h3></div>
+			  		<div class="col-xs-6 col-xs-offset-2">
+			  			<span>前往地址</span>
+			  			<span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+			  			<a id="gotoUrl" href="javascript:void(0);"></a>
+			  		</div>
+			  	</div>
+			  </div>
+			  <div class="panel-body">
+			  	<div class="row">
+	  				<div class="col-xs-4 col-xs-offset-3">
+						<button id="startBtn" type="button" class="btn btn-success btn-lg">
+						  <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="col-xs-4">
+						<button id="stopBtn" type="button" class="btn btn-danger btn-lg" disabled>
+						  <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<footer>
+			<span>Powered by 王鹏.</span>
+			<span>Contact：<a href="mailto:wangpeng24@hisense.com">wangpeng24@hisense.com</a></span>
+			<span>V0.0.2</span>
+		</footer>
+	</div>
+	<script src="./lib/jquery-2.1.4.min.js"></script>
+	<script src="./lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+	<script src="index.js"></script>
+</body>
+</html>

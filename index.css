@@ -1,0 +1,48 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	padding: 10px;
+}
+
+.container-fluid {
+	margin: 10px;
+}
+
+.fl {
+	position: relative;
+	float: left;
+}
+
+.fr {
+	position: relative;
+	float: right;
+}
+
+#svcPort{
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-radius: 0;
+	border-bottom: 1px solid #333;
+}
+
+#svcTitle {
+	position: relative;
+	float: left;
+}
+
+#gotoUrl {
+	position: relative;
+	float: right;
+}
+
+footer {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	line-height: 24px;
+	text-align: center;
+}
