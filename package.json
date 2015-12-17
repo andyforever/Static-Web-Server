@@ -2,8 +2,13 @@
   "main": "index.html",
   "name": "static-server",
   "description": "Static web Server.",
-  "version": "0.0.5",
-  "keywords": ["static web server", "nw", "web server", "node-webkit" ],
+  "version": "0.0.8",
+  "keywords": [
+    "static web server",
+    "nw",
+    "web server",
+    "node-webkit"
+  ],
   "window": {
     "show": false,
     "toolbar": false,
@@ -11,5 +16,8 @@
     "width": 600,
     "height": 600,
     "icon": "./icons/logo_16.png"
+  },
+  "dependencies": {
+    "marked": "^0.3.5"
   }
 }

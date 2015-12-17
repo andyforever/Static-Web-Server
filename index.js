@@ -1,22 +1,31 @@
 $(function($) {
+	//模块依赖
 	var gui = require('nw.gui');
 	var http = require('http');
 	var nodeStatic = require('node-static');
 
+	//全局变量定义
 	var path = localStorage.folderPath || ''; //文件目录
-	var port = null;//监听端口
+	var port = null; //监听端口
 	var fileServer = null; //文件服务
 	var server = null; //HTTP服务
 	var serverUrl = ''; //服务地址
 
+	var aboutWindow = null;
+
 	//窗口操作及事件监听
-	var win = gui.Window.get();
+	var mainWindow = gui.Window.get();
 	var isShowWindow = false;
-	win.show();
+	mainWindow.show();
 	isShowWindow = true;
-	win.on('minimize', function() {
-		win.hide();
+	mainWindow.on('minimize', function() {
+		mainWindow.hide();
 		isShowWindow = false;
+	});
+	mainWindow.on('closed', function() {
+		if (aboutWindow) {
+			aboutWindow.close();
+		};
 	})
 
 	//创建托盘图标
@@ -27,19 +36,26 @@ $(function($) {
 	var menu = new gui.Menu();
 	menu.append(new gui.MenuItem({
 		type: 'normal',
+		label: '关于',
+		click: function() {
+			showAbout();
+		}
+	}));
+	menu.append(new gui.MenuItem({
+		type: 'normal',
 		label: '退出',
 		click: function() {
-			stopServer(win.close());
+			stopServer(mainWindow.close());
 		}
 	}));
 	tray.menu = menu;
 
 	tray.on('click', function() {
 		if (isShowWindow) {
-			win.hide();
+			mainWindow.hide();
 			isShowWindow = false;
 		} else {
-			win.show();
+			mainWindow.show();
 			isShowWindow = true;
 		}
 	});
@@ -51,6 +67,10 @@ $(function($) {
 	var $gotoUrl = $('#gotoUrl');
 	var $startBtn = $('#startBtn');
 	var $stopBtn = $('#stopBtn');
+
+	var $portInput = $('#svcPort');
+	var $cacheInput = $('#cacheTime');
+	var $gzipInput = $('#gzipCompress');
 
 	$($('footer > span').last()).text('V' + gui.App.manifest.version)
 
@@ -71,8 +91,19 @@ $(function($) {
 	})
 
 	$startBtn.click(function() {
-		port = $('#svcPort').val();
-		startServer(path, port);
+		port = $portInput.val();
+
+		var cacheTime = parseInt($cacheInput.val());
+		if(isNaN(cacheTime)) { 
+			alert('缓存时间必须是数字类型！');
+			return;
+		}
+
+		var options = {};
+		options.cache = cacheTime === 0 ? false : cacheTime * 60;
+		options.gzip = $gzipInput.prop('checked');
+		console.log(options)
+		startServer(path, options, port);
 	})
 
 	$stopBtn.click(function() {
@@ -105,13 +136,13 @@ $(function($) {
 		return notification;
 	}
 
-	var startServer = function(path, port) {
+	var startServer = function(path, options, port) {
 		if (!path) {
 			alert('请先设置服务目录！');
 			return
 		}
 
-		fileServer = new nodeStatic.Server(path);
+		fileServer = new nodeStatic.Server(path, options);
 		server = http.Server(function(request, response) {
 			request.addListener('end', function() {
 				fileServer.serve(request, response);
@@ -126,6 +157,7 @@ $(function($) {
 			$gotoUrl.text(serverUrl);
 			$startBtn.attr('disabled', "true");
 			$stopBtn.removeAttr("disabled");
+			disableEdit();
 		});
 
 		server.on('error', function(e) {
@@ -159,10 +191,38 @@ $(function($) {
 			$gotoUrl.removeAttr("href");
 			$gotoUrl.text('');
 			$startBtn.removeAttr("disabled");
-
+			enableEdit();
 			if (callback) {
 				callback();
 			};
+		})
+	}
+
+	var enableEdit = function() {
+		$portInput.removeAttr('disabled');
+		$gzipInput.removeAttr('disabled');
+		$cacheInput.removeAttr('disabled');
+	}
+
+	var disableEdit = function(){
+		$portInput.attr('disabled', 'disabled');
+		$gzipInput.attr('disabled', 'disabled');
+		$cacheInput.attr('disabled', 'disabled');
+	}	
+
+	var showAbout = function() {
+		var params = {
+			toolbar: false,
+			resizable: false,
+			show: true,
+			height: 600,
+			width: 500,
+			icon: './icons/logo_16.png'
+		};
+
+		aboutWindow = gui.Window.open('about.html', params);
+		aboutWindow.on('closed', function() {
+			mainWindow.show();
 		})
 	}
 
